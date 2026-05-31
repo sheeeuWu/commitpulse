@@ -1324,6 +1324,14 @@ describe('GET /api/streak', () => {
     });
   });
 
+  it('falls back to commits mode when ?mode=unknown is given', async () => {
+    const response = await GET(makeRequest({ user: 'octocat', mode: 'invalid' }));
+
+    expect(response.status).toBe(200);
+    const body = await response.text();
+    expect(body).toContain('<svg');
+  });
+
   describe('org parameter validation', () => {
     it('returns 400 when org parameter is a User instead of an Organization', async () => {
       vi.mocked(getOrgDashboardData).mockRejectedValueOnce(
