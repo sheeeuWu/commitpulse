@@ -442,6 +442,26 @@ export const wrappedParamsSchema = z.object({
   height: dimensionParam('height', 80, 800),
 });
 
+export const compareParamsSchema = z
+  .object({
+    user1: z
+      .string({ error: 'Missing user1 parameter' })
+      .trim()
+      .min(1, { message: 'user1 is required' })
+      .max(39, { message: 'GitHub username cannot exceed 39 characters' })
+      .regex(GITHUB_USERNAME_REGEX, { message: 'Invalid GitHub username for user1' }),
+    user2: z
+      .string({ error: 'Missing user2 parameter' })
+      .trim()
+      .min(1, { message: 'user2 is required' })
+      .max(39, { message: 'GitHub username cannot exceed 39 characters' })
+      .regex(GITHUB_USERNAME_REGEX, { message: 'Invalid GitHub username for user2' }),
+  })
+  .refine((data) => data.user1.toLowerCase() !== data.user2.toLowerCase(), {
+    message: 'Cannot compare a user with themselves.',
+    path: ['user2'],
+  });
+
 export const notifyPostSchema = z.object({
   username: z
     .string({ error: 'Username is required.' })
@@ -490,5 +510,6 @@ export type GithubParams = z.infer<typeof githubParamsSchema>;
 export type OgParams = z.infer<typeof ogParamsSchema>;
 export type StatsParams = z.infer<typeof statsParamsSchema>;
 export type WrappedParams = z.infer<typeof wrappedParamsSchema>;
+export type CompareParams = z.infer<typeof compareParamsSchema>;
 export type NotifyPostParams = z.infer<typeof notifyPostSchema>;
 export type NotifyGetParams = z.infer<typeof notifyGetSchema>;
