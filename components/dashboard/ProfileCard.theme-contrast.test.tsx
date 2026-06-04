@@ -26,7 +26,6 @@ describe('ProfileCard: Dark and Light Prefers-Color-Scheme Visual Cohesion', () 
   let mockUser: any;
 
   beforeEach(() => {
-    // Generate standard profile metrics for structural layout testing
     mockProfileData = {
       username: 'ThemeTester',
       totalCommits: 500,
@@ -35,7 +34,6 @@ describe('ProfileCard: Dark and Light Prefers-Color-Scheme Visual Cohesion', () 
       activityLog: [],
     };
 
-    // Provide the complete user object to prevent missing property crashes
     mockUser = {
       name: 'Theme Tester',
       avatarUrl: 'https://avatars.githubusercontent.com/u/1?v=4',
@@ -48,7 +46,6 @@ describe('ProfileCard: Dark and Light Prefers-Color-Scheme Visual Cohesion', () 
       },
     };
 
-    // Mock fetch in case the component fetches its own internal data
     vi.spyOn(global, 'fetch').mockResolvedValue(
       new Response(JSON.stringify({ success: true, data: mockProfileData }), {
         status: 200,
@@ -76,23 +73,23 @@ describe('ProfileCard: Dark and Light Prefers-Color-Scheme Visual Cohesion', () 
       })),
     });
 
-    const { container } = render(<ProfileCard user={mockUser} data={mockProfileData} />);
+    const { container } = render(<ProfileCard user={mockUser} />);
     expect(container).toBeInTheDocument();
   });
 
   it('Test 2: should assert that the visual elements adapt color styling properly for both settings', () => {
-    const { container } = render(<ProfileCard user={mockUser} data={mockProfileData} />);
+    const { container } = render(<ProfileCard user={mockUser} />);
     expect(container).not.toBeEmptyDOMElement();
   });
 
   it('Test 3: should verify contrast ratio standards are satisfied for all textual elements', () => {
-    const { container } = render(<ProfileCard user={mockUser} data={mockProfileData} />);
+    const { container } = render(<ProfileCard user={mockUser} />);
     const textNodes = container.querySelectorAll('span, p, h1, h2, h3');
     expect(textNodes.length).toBeGreaterThan(0);
   });
 
   it('Test 4: should check that specific custom stylesheet properties or Tailwind classes are active in the markup', () => {
-    const { container } = render(<ProfileCard user={mockUser} data={mockProfileData} />);
+    const { container } = render(<ProfileCard user={mockUser} />);
     const cardElement = container.firstElementChild;
     expect(cardElement).toBeTruthy();
     if (cardElement) {
@@ -101,7 +98,7 @@ describe('ProfileCard: Dark and Light Prefers-Color-Scheme Visual Cohesion', () 
   });
 
   it('Test 5: should ensure that background overlays do not clip foreground content colors', () => {
-    const { container } = render(<ProfileCard user={mockUser} data={mockProfileData} />);
+    const { container } = render(<ProfileCard user={mockUser} />);
     const divs = container.querySelectorAll('div');
     expect(divs.length).toBeGreaterThan(0);
   });
