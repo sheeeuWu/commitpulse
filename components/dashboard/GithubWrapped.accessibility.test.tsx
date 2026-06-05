@@ -53,59 +53,33 @@ vi.mock('framer-motion', async () => {
 });
 
 const mockProfile = {
-  login: 'accessibility-user',
-  avatar_url: 'https://github.com/test.png',
-  html_url: 'https://github.com/test',
+  username: 'accessibility-user',
+  name: 'Accessibility User',
+  avatarUrl: 'https://github.com/test.png',
+  isPro: false,
+  bio: 'Test bio',
+  location: 'Internet',
+  joinedDate: '2024-01-01',
+  developerScore: 75,
+  stats: {
+    repositories: 10,
+    followers: 100,
+    following: 50,
+    stars: 200,
+  },
 };
 
 const mockWrappedData = {
   totalContributions: 1200,
-  totalCommits: 120,
-  totalStars: 45,
-
-  longestStreak: 12,
-  currentStreak: 4,
-
-  busiestDay: 'Monday',
+  mostActiveDate: '2024-12-15',
+  highestDailyCount: 25,
   busiestMonth: '2024-03',
   weekendRatio: 30,
-
-  topLanguages: [
-    {
-      name: 'TypeScript',
-      percentage: 60,
-    },
-  ],
-
-  topRepositories: [
-    {
-      name: 'commitpulse',
-      stars: 25,
-      forks: 5,
-    },
-  ],
-
-  contributionYears: ['2024'],
-
-  totalPullRequests: 14,
-  totalIssues: 6,
-  totalReviews: 9,
-
-  peakCommitHour: 22,
-  mostActiveMonth: 'March',
-
-  averageCommitsPerDay: 6,
-  contributionsThisYear: 800,
-  favoriteLanguage: 'TypeScript',
-
-  totalRepositories: 18,
-  totalForks: 12,
-  mergedPullRequests: 10,
-
-  codingSessions: 42,
-  peakDayCommits: 25,
-
-  achievements: ['Fast Committer'],
+  topLanguage: 'TypeScript',
+  calendar: {
+    totalContributions: 1200,
+    weeks: [],
+  },
 };
 
 describe('GithubWrapped Accessibility', () => {
