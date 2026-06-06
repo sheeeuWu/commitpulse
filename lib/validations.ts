@@ -264,6 +264,7 @@ const baseStreakParamsSchema = z.object({
       { message: 'Invalid "date" format. Use ISO 8601.' }
     ),
   refresh: z.string().optional().transform(toRefreshFlag),
+  bypassCache: z.string().optional().transform(toRefreshFlag),
   hide_title: z.string().optional().transform(toBooleanFlag),
   hide_background: z.string().optional().transform(toBooleanFlag),
   hide_stats: z.string().optional().transform(toBooleanFlag),
@@ -383,6 +384,7 @@ export const githubParamsSchema = z.object({
       message: 'Invalid GitHub username',
     }),
   refresh: z.string().optional().transform(toRefreshFlag),
+  bypassCache: z.string().optional().transform(toRefreshFlag),
 });
 
 export const compareParamsSchema = z
@@ -438,6 +440,7 @@ export const ogParamsSchema = z
       .transform(toEmptyStringAsUndefined)
       .transform(toValidHexColor('000000')),
     refresh: z.string().optional().transform(toRefreshFlag),
+    bypassCache: z.string().optional().transform(toRefreshFlag),
   })
   .transform((data) => ({
     ...data,
@@ -453,6 +456,7 @@ export const statsParamsSchema = z.object({
       message: 'Invalid GitHub username',
     }),
   refresh: z.string().optional().transform(toRefreshFlag),
+  bypassCache: z.string().optional().transform(toRefreshFlag),
   tz: timeZoneParam,
 });
 
@@ -534,6 +538,7 @@ export const wrappedParamsSchema = z.object({
     .optional()
     .transform((val) => sanitizeFont(val) || undefined),
   refresh: z.string().optional().transform(toRefreshFlag),
+  bypassCache: z.string().optional().transform(toRefreshFlag),
   hide_title: z.string().optional().transform(toBooleanFlag),
   hide_background: z.string().optional().transform(toBooleanFlag), // ✅ Fixed: was toRefreshFlag
   width: dimensionParam('width', 100, 1200),

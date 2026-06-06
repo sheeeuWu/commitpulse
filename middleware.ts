@@ -28,7 +28,9 @@ export async function middleware(request: NextRequest) {
   // Secure client IP extraction
   const ip = getClientIp(request);
 
-  const isRefresh = request.nextUrl.searchParams.get('refresh') === 'true';
+  const isRefresh =
+    request.nextUrl.searchParams.get('refresh') === 'true' ||
+    request.nextUrl.searchParams.get('bypassCache') === 'true';
 
   if (isRefresh) {
     // Stricter limit: 5 cache-bypass requests per minute per IP.
