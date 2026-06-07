@@ -10,6 +10,7 @@ interface MockMotionProps {
   transition?: unknown;
   whileHover?: unknown;
   whileTap?: unknown;
+  whileInView?: unknown;
 }
 
 type SafeDivProps = React.ComponentPropsWithoutRef<'div'> & MockMotionProps;
