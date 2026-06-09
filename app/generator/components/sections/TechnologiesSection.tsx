@@ -63,7 +63,6 @@ export function TechnologiesSection({ selected, onChange }: TechnologiesSectionP
   };
 
   const clearAll = () => onChange([]);
-
   return (
     <div id="technologies-section">
       <SectionCard
