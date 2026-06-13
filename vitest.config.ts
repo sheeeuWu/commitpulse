@@ -15,7 +15,6 @@ export default defineConfig({
         : ['**/*.massive-scaling.test.ts', '**/*.massive-scaling.test.tsx']),
     ],
     maxWorkers: process.env.CI ? 2 : 4,
-    minWorkers: 1,
     testTimeout: 30000,
     pool: 'forks',
     coverage: {
