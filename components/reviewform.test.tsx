@@ -23,6 +23,7 @@ global.fetch = vi.fn();
 
 describe('SubmitReviewPage', () => {
   beforeEach(() => {
+    globalThis.fetch = vi.fn();
     vi.clearAllMocks();
   });
 
