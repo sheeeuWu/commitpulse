@@ -9,15 +9,23 @@ import {
 
 vi.mock('@/lib/cache', () => {
   const store = new Map<string, unknown>();
-  const DistributedCache = vi.fn().mockImplementation(() => ({
-    get: vi.fn(async (key: string) => store.get(key) ?? null),
-    set: vi.fn(async (key: string, value: unknown) => {
+  class DistributedCache<T> {
+    async get(key: string): Promise<T | null> {
+      return (store.get(key) as T) ?? null;
+    }
+    async set(key: string, value: T): Promise<void> {
       store.set(key, value);
-    }),
-    delete: vi.fn(async (key: string) => store.delete(key)),
-  }));
+    }
+    async delete(key: string): Promise<boolean> {
+      return store.delete(key);
+    }
+  }
   return { DistributedCache };
 });
+
+// Use a recent timestamp so report-window assertions stay valid regardless of
+// when the suite runs (the weekly window is 7 days).
+const recentIso = new Date(Date.now() - 60 * 60 * 1000).toISOString();
 
 const sampleWorkflowPayload = {
   workflow_run: {
@@ -25,8 +33,8 @@ const sampleWorkflowPayload = {
     name: 'CI',
     status: 'completed',
     conclusion: 'success',
-    created_at: '2026-06-16T10:00:00Z',
-    updated_at: '2026-06-16T10:05:00Z',
+    created_at: recentIso,
+    updated_at: recentIso,
     run_number: 7,
     repository: {
       name: 'commitpulse',
@@ -143,7 +151,10 @@ describe('generateCIReport', () => {
     })!;
 
     const report = generateCIReport([successEvent, failureEvent], 'weekly') as {
-      repositories: Record<string, { total: number; success: number; failure: number; successRate: string }>;
+      repositories: Record<
+        string,
+        { total: number; success: number; failure: number; successRate: string }
+      >;
     };
 
     const repo = report.repositories['JhaSourav07/commitpulse'];

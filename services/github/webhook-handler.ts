@@ -259,7 +259,10 @@ export function generateCIReport(
   };
 }
 
-export async function setAlertConfig(repository: string, config: Partial<AlertConfig>): Promise<void> {
+export async function setAlertConfig(
+  repository: string,
+  config: Partial<AlertConfig>
+): Promise<void> {
   const alertKey = `alert:${repository}`;
   const existing = (await alertCache.get(alertKey)) ?? ({ enabled: true } as AlertConfig);
   const merged: AlertConfig = { ...existing, ...config } as AlertConfig;
