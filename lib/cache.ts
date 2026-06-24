@@ -491,7 +491,7 @@ export class DistributedCache<T> {
         key,
         error: err,
       });
-      return true;
+      return false;
     }
   }
 
