@@ -1,9 +1,8 @@
-﻿import React from 'react';
-import { Card } from '@/components/ui/card';
+import React from 'react';
 
 export function DeveloperCollaborationIntelligenceHub() {
   return (
-    <Card className="p-6 mt-6 border rounded-lg bg-white dark:bg-gray-800 shadow-sm">
+    <div className="p-6 mt-6 border rounded-lg bg-white dark:bg-gray-800 shadow-sm">
       <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
         Developer Collaboration Intelligence Hub
       </h2>
@@ -27,6 +26,6 @@ export function DeveloperCollaborationIntelligenceHub() {
           </div>
         </div>
       </div>
-    </Card>
+    </div>
   );
 }
