@@ -141,6 +141,28 @@ describe('[Refactor] renderGhostDefs — shared defs helper consistency', () => 
   });
 });
 
+describe('[Refactor] renderGhostStyles — shared styles helper consistency', () => {
+  it('both functions contain identical @keyframes float definitions', () => {
+    const notFoundSvg = generateNotFoundSVG('octocat', '#0d1117', '#00ffaa', '#ffffff', 8);
+    const rateLimitSvg = generateRateLimitSVG('#0d1117', '#00ffaa', '#ffffff', 8, '8s');
+
+    expect(notFoundSvg).toContain('@keyframes float');
+    expect(rateLimitSvg).toContain('@keyframes float');
+    expect(notFoundSvg).toContain('transform: translateY(-10px)');
+    expect(rateLimitSvg).toContain('transform: translateY(-10px)');
+  });
+
+  it('both functions contain identical utility classes', () => {
+    const notFoundSvg = generateNotFoundSVG('octocat', '#0d1117', '#00ffaa', '#ffffff', 8);
+    const rateLimitSvg = generateRateLimitSVG('#0d1117', '#00ffaa', '#ffffff', 8, '8s');
+
+    ['.floating', '.delay-1', '.delay-2'].forEach((cls) => {
+      expect(notFoundSvg).toContain(cls);
+      expect(rateLimitSvg).toContain(cls);
+    });
+  });
+});
+
 // ─── Shared fixtures ──────────────────────────────────────────────────────────
 
 const baseStats: StreakStats = {
