@@ -34,7 +34,7 @@ class ResizeObserverMock {
   disconnect() {}
 }
 
-const mockInsights: PRInsightData = {
+const mockInsights = {
   totalPRs: 12,
   openPRs: 2,
   mergedPRs: 9,
@@ -80,7 +80,7 @@ const mockInsights: PRInsightData = {
   },
 };
 
-function mockFetchWith(data: PRInsightData = mockInsights) {
+function mockFetchWith(data: PRInsightData = mockInsights as unknown as PRInsightData) {
   vi.stubGlobal(
     'fetch',
     vi.fn().mockResolvedValue({
@@ -111,7 +111,7 @@ describe('PRInsightsClient Timezone Normalization & Calendar Data Boundary Align
 
     for (const tz of timezones) {
       process.env.TZ = tz;
-      mockFetchWith(mockInsights);
+      mockFetchWith(mockInsights as unknown as PRInsightData);
       localStorage.clear();
 
       const { unmount } = render(<PRInsightsClient username="octocat" />);
