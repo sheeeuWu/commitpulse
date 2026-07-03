@@ -55,7 +55,7 @@ const themes = [
 function percentile(values: number[], p: number): number {
   if (values.length === 0) return 0;
 
-  const sorted = [...values].sort((a, b) => a -b);
+  const sorted = [...values].sort((a, b) => a - b);
 
   const index = (p / 100) * (sorted.length - 1);
   const lower = Math.floor(index);
@@ -117,10 +117,6 @@ function benchmark(): void {
     }
 
     const avg = times.reduce((a, b) => a + b, 0) / times.length;
-    const p50 = getPercentile(times, 50);
-    const p95 = getPercentile(times, 95);
-    const p99 = getPercentile(times, 99);
-
     const min = Math.min(...times);
     const max = Math.max(...times);
 
