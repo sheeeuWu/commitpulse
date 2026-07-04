@@ -103,11 +103,25 @@ describe('TopMetricsRow Timezone Normalization & Calendar Data Boundary Alignmen
   it('4. asserts calendar date format utility outputs match expectations in each locale', () => {
     const testDate = new Date('2026-07-04T12:00:00Z');
 
-    const usFormat = new Intl.DateTimeFormat('en-US', { timeZone: 'UTC' }).format(testDate);
-    const ukFormat = new Intl.DateTimeFormat('en-GB', { timeZone: 'UTC' }).format(testDate);
+    const usParts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'UTC',
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    }).formatToParts(testDate);
 
-    expect(usFormat).toBe('7/4/2026');
-    expect(ukFormat).toBe('04/07/2026');
+    const ukParts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'UTC',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).formatToParts(testDate);
+
+    const pick = (parts: Intl.DateTimeFormatPart[], type: Intl.DateTimeFormatPartTypes) =>
+      parts.find((p) => p.type === type)?.value;
+
+    expect([pick(usParts, 'month'), pick(usParts, 'day'), pick(usParts, 'year')]).toEqual(['7', '4', '2026']);
+    expect([pick(ukParts, 'day'), pick(ukParts, 'month'), pick(ukParts, 'year')]).toEqual(['04', '07', '2026']);
 
     render(<TopMetricsRow data={mockData} />);
     expect(screen.getByText('Total PRs')).toBeInTheDocument();
