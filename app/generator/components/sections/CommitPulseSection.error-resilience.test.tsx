@@ -86,7 +86,7 @@ describe('CommitPulseSection - Error Resilience (Variation 6)', () => {
 
   it('1. Hydration Stability: renders component via SSR+hydration gracefully', () => {
     const { container } = render(<CommitPulseSection {...defaultProps} />);
-    
+
     // Verify component mounts without crashes
     expect(container).toBeTruthy();
     // Verify hydration didn't trigger React warnings
@@ -119,7 +119,7 @@ describe('CommitPulseSection - Error Resilience (Variation 6)', () => {
     await waitFor(() => {
       expect(screen.getByText(/Verification failed/i)).toBeInTheDocument();
     });
-    
+
     // Ensure no uncaught exceptions escape by verifying the document remains intact
     expect(document.body).toBeTruthy();
     expect(screen.queryByText('Should not hit error boundary')).not.toBeInTheDocument();
@@ -134,9 +134,11 @@ describe('CommitPulseSection - Error Resilience (Variation 6)', () => {
 
     // Verify console.error was captured
     expect(consoleErrorSpy).toHaveBeenCalled();
-    
+
     // Verify logger was invoked exactly once for the ErrorBoundary catch
-    const loggedError = consoleErrorSpy.mock.calls.find(call => call.includes('ErrorBoundary caught:'));
+    const loggedError = consoleErrorSpy.mock.calls.find((call) =>
+      call.includes('ErrorBoundary caught:')
+    );
     expect(loggedError).toBeTruthy();
     expect(loggedError?.[1]).toBe('Nested Runtime Exception');
   });
@@ -152,7 +154,7 @@ describe('CommitPulseSection - Error Resilience (Variation 6)', () => {
 
     // Component is initially in error state
     expect(screen.getByText('Oops! Something failed.')).toBeInTheDocument();
-    
+
     // Simulate fixing the root cause for the next render
     rerender(
       <TestErrorBoundary fallback={<div>Oops! Something failed.</div>} onRecover={mockRecoverFn}>
@@ -166,7 +168,7 @@ describe('CommitPulseSection - Error Resilience (Variation 6)', () => {
 
     // Verify recovery callback was executed
     expect(mockRecoverFn).toHaveBeenCalledTimes(1);
-    
+
     // Verify the component recovered and fallback is removed
     expect(screen.queryByText('Oops! Something failed.')).not.toBeInTheDocument();
     // The main component should now be visible (we look for the label or text)
