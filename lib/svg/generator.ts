@@ -110,7 +110,7 @@ export function getUsernameFontSize(username: string): number {
   if (len <= 12) return 18;
   return Math.max(10, 18 - (len - 12) * 0.5);
 }
-
+let currentBackgroundRectBorderAttrs = '';
 /**
  * Renders the foundational background rectangle for all SVG cards.
  * Maintains the 0.5px offset required for crisp SVG stroke rendering on standard DPI screens.
