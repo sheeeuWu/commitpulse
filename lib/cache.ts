@@ -146,15 +146,9 @@ export class TTLCache<T> {
    * @example
    * const user = cache.get("user:1");
    */
-  get(key: string): T | null {
-    //TTLCache.assertValidKey(key);
-    if (key === null || key === undefined) {
-      throw new TypeError('Cache key must be a string');
-    }
-
-    if (typeof key !== 'string') {
-      throw new TypeError('Cache key must be a string');
-    }
+  get(key: string): V | null {
+    if (typeof key !== 'string' || key.trim().length === 0)
+      throw new TypeError('Cache key must be a non-empty, non-whitespace string.');
 
     const hit = this.store.get(key);
     if (!hit) return null;
@@ -181,10 +175,8 @@ export class TTLCache<T> {
    * }
    */
   has(key: string): boolean {
-    //TTLCache.assertValidKey(key);
-    if (key === null || key === undefined) {
-      throw new TypeError('Cache key must be a string');
-    }
+    if (typeof key !== 'string' || key.trim().length === 0)
+      throw new TypeError('Cache key must be a non-empty, non-whitespace string.');
 
     if (typeof key !== 'string') {
       throw new TypeError('Cache key must be a string');
@@ -212,7 +204,8 @@ export class TTLCache<T> {
    * cache.delete("user:1");
    */
   delete(key: string): boolean {
-    TTLCache.assertValidKey(key);
+    if (typeof key !== 'string' || key.trim().length === 0)
+      throw new TypeError('Cache key must be a non-empty, non-whitespace string.');
 
     return this.store.delete(key);
   }
